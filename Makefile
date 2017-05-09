@@ -9,13 +9,19 @@ CONTAINER_NAME 		:= nginx-lua-tests
 # lua volumes so that we don't need to create a custom
 # image and keep restarting the container.
 run:
+# create and  start the container
+# mount current dir at /etc/nginx 
+# bind to host's port 80
+# name of the containerr
+# base image
+# start nginx with a specifiic config
 	docker rm -f $(CONTAINER_NAME) || true
-	docker run \                        # create and  start the container
-		-v $(shell pwd):/etc/nginx/ \     # mount current dir at /etc/nginx 
-		-p 80:80 \                        # bind to host's port 80
-		--name $(CONTAINER_NAME) \        # name of the containerr
-		openresty/openresty:alpine-fat \  # base image
-		-c /etc/nginx/nginx.conf          # start nginx with a specifiic config
+	docker run \
+		-v $(shell pwd):/etc/nginx/ \
+		-p 80:80 \
+		--name $(CONTAINER_NAME) \
+		openresty/openresty:alpine-fat \
+		-c /etc/nginx/nginx.conf          
 
 
 # Useful for reloading the nginx instance running inside
